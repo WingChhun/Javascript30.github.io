@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>JS Drum Kit</title>https://medium.com/basecshttps://medium.com/basecs
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+
+  <div class="keys">
+
+    <div data-key="65" class="key">
+      <kbd>A</kbd>
+      <span class="sound">clap</span>
+    </div>
+    <div data-key="83" class="key">
+      <kbd>S</kbd>
+      <span class="sound">hihat</span>
+    </div>
+    <div data-key="68" class="key">
+      <kbd>D</kbd>
+      <span class="sound">kick</span>
+    </div>
+    <div data-key="70" class="key">
+      <kbd>F</kbd>
+      <span class="sound">openhat</span>
+    </div>
+    <div data-key="71" class="key">
+      <kbd>G</kbd>
+      <span class="sound">boom</span>
+    </div>
+    <div data-key="72" class="key">
+      <kbd>H</kbd>
+      <span class="sound">ride</span>
+    </div>
+    <div data-key="74" class="key">
+      <kbd>J</kbd>
+      <span class="sound">snare</span>
+    </div>
+    <div data-key="75" class="key">
+      <kbd>K</kbd>
+      <span class="sound">tom</span>
+    </div>
+    <div data-key="76" class="key">
+      <kbd>L</kbd>
+      <span class="sound">tink</span>
+    </div>
+    <!-- Added Q -->
+    <div data-key="81" class="key">
+      <kbd>Q</kbd>
+      <span class="sound">clap</span>
+    </div>
+
+
+  </div>
+
+
+
+  <div class="keys">
+
+
+
+  </div>
+
+  <!-- Original Sounds -->
+  <audio data-key="65" src="sounds/clap.wav"></audio>
+  <audio data-key="83" src="sounds/hihat.wav"></audio>
+  <audio data-key="68" src="sounds/kick.wav"></audio>
+  <audio data-key="70" src="sounds/openhat.wav"></audio>
+  <audio data-key="71" src="sounds/boom.wav"></audio>
+  <audio data-key="72" src="sounds/ride.wav"></audio>
+  <audio data-key="74" src="sounds/snare.wav"></audio>
+  <audio data-key="75" src="sounds/tom.wav"></audio>
+  <audio data-key="76" src="sounds/tink.wav"></audio>
+  <!-- Lofi hip hop sounds -->
+  <audio data-key="81" src="sounds/snare/snare 01.wav"></audio>
+
+
+
+  <script>
+    //Functions prototypes
+    function removeTransition(e) {
+      if (e.propertyName !== 'transform') return; //skip if not transform
+      
+      console.log(e.propertyName);
+      e.target.classList.remove('playing');
+    }
+
+    function playAudio(e) {
+      //Select query audio[daya-key = "e.keycode"]""
+      //Select div with class Key
+      const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+      const key = document.querySelector(`div[data-key="${e.keyCode}"]`);
+
+//View audio object
+console.log(audio);
+      //If user hits a key thats not explicitly defined as a audio[data-key], then return, 
+      if (!audio) return;
+      //Else, add the class 'playing' to query key
+      console.log(key); //see what key is
+      key.classList.add('playing');
+      //Play sound
+      audio.play();
+    }
+
+
+
+    //Select queries with class '.key and create an Array, stoer into const keys
+    const keys = Array.from(document.querySelectorAll('.key'));
+    //Loop through keys, add an event Listener to each, so we can restart audio
+    keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+
+    //On keydown, run playAudio()
+    window.addEventListener('keydown', playAudio);
+  </script>
+
+
+</body>
+
+</html>
